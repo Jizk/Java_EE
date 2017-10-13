@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+          "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<constant name="struts.ui.theme" value="simple"></constant>
+	
+    <package name="emp" extends="struts-default" >
+    	
+    	<global-results>
+    		<result name="error">/error/error.jsp</result>
+    	</global-results>
+    	
+    	<action name="emp_*" class="pm.action.EmployeeAction" method="{1}">
+    		
+    		<!-- 防止表单重复提交第二步 -->
+    		<interceptor-ref name="defaultStack"></interceptor-ref>
+    		<interceptor-ref name="token">
+    			<param name="includeMeathods">save</param>
+    		</interceptor-ref>
+    		
+    		<!-- 防止表单重复提交第三步 -->
+    		<result name="invalid.token" type="redirectAction">emp_list</result>
+    			
+    		<result name="list">/WEB-INF/list.jsp</result>
+    		<result name="update">/WEB-INF/list.jsp</result>
+    		
+    		
+    		<!-- 防止表单重复提交可以将转发改变成重定向 -->
+    		<result name="addSuccess" type="redirectAction">emp_list</result>
+    		
+    	</action>
+    	
+    	
+    </package> 
+</struts>
